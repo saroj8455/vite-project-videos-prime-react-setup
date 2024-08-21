@@ -6,7 +6,14 @@ import { Button } from 'primereact/button';
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
+      <div className='container'>
+        <h1>Vite + React</h1>
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact</li>
+        </ul>
+      </div>
     </>
   );
 }
