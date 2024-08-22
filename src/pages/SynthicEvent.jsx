@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function SynthicEvent() {
-  return <div>SynthicEvent</div>;
+  return <div className='text-2xl'>SynthicEvent</div>;
 }
