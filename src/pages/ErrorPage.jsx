@@ -4,7 +4,7 @@ import { useRouteError } from 'react-router-dom';
 
 export default function ErrorPage() {
   const error = useRouteError();
-  console.error(error);
+  console.log(error);
   return (
     <div className='surface-section px-4 py-8 md:px-6 lg:px-8'>
       <div className='flex flex-column lg:flex-row justify-content-center align-items-center gap-7'>
