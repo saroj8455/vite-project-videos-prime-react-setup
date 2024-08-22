@@ -10,11 +10,13 @@ import Home from './routes/Home';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HigherOrder from './pages/HigherOrder';
 import SynthicEvent from './pages/SynthicEvent';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <LandingPageLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',

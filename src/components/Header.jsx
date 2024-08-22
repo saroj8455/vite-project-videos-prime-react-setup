@@ -1,6 +1,9 @@
 import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
+import { InputText } from 'primereact/inputtext';
+import { IconField } from 'primereact/iconfield';
+import { InputIcon } from 'primereact/inputicon';
 export default function Header() {
   return (
     <header>
