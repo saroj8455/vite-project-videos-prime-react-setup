@@ -10,3 +10,5 @@ Currently, two official plugins are available:
 ## Font Error Free Setup
 
 `https://github.com/primefaces/primereact-examples/tree/main/vite-basic-ts/src`
+
+## Make a video on react router with LandingPageLayout Setups
