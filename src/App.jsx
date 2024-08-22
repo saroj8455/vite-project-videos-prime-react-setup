@@ -8,6 +8,8 @@ import Footer from './components/Footer';
 import About from './routes/About';
 import Home from './routes/Home';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import HigherOrder from './pages/HigherOrder';
+import SynthicEvent from './pages/SynthicEvent';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+        children: [
+          { path: 'hoc', element: <HigherOrder /> },
+          { path: 'synth', element: <SynthicEvent /> },
+        ],
       },
       {
         path: '/about',
