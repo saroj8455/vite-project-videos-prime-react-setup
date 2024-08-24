@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import Person1 from '../components/Person1';
+import Person2 from '../components/Person2';
+import PostCard from '../components/PostCard';
 
 export default function Home() {
   return (
@@ -42,6 +45,12 @@ export default function Home() {
           </div>
         </div>
       </article>
+      <article>
+        <Person1 init='hi init, existing props' />
+        <Person2 />
+      </article>
+
+      <PostCard />
     </section>
   );
 }
