@@ -38,6 +38,15 @@ export default function Header() {
                 <span>About</span>
               </Link>
             </li>
+            <li>
+              <Link
+                to='/products'
+                className='flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150 w-full'
+              >
+                <i className='pi pi-discord mr-2' />
+                <span>Products</span>
+              </Link>
+            </li>
           </ul>
         </div>
         {/* Menu */}

@@ -11,6 +11,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HigherOrder from './pages/HigherOrder';
 import SynthicEvent from './pages/SynthicEvent';
 import ErrorPage from './pages/ErrorPage';
+import Products from './routes/Products';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />,
+      },
+      {
+        path: '/products',
+        element: <Products />,
       },
       {
         path: '*',
