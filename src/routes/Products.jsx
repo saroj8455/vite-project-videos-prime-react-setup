@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
   keepPreviousData,
 } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Button } from 'primereact/button';
 import { ButtonGroup } from 'primereact/buttongroup';
 import { Rating } from 'primereact/rating';
@@ -27,6 +28,7 @@ export default function Products() {
         {/* <PaginateProducts /> */}
         <PostList />
         <ProductList />
+        <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>
     </section>
   );
