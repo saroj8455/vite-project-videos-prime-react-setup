@@ -1,25 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useQuery,
   useMutation,
   useQueryClient,
   QueryClient,
   QueryClientProvider,
+  keepPreviousData,
 } from '@tanstack/react-query';
 import { Button } from 'primereact/button';
 import { ButtonGroup } from 'primereact/buttongroup';
 import { Rating } from 'primereact/rating';
 import { ProgressBar } from 'primereact/progressbar';
+import { Paginator } from 'primereact/paginator';
 import { v4 as uuidv4 } from 'uuid';
 
 // Create a client
 const queryClient = new QueryClient();
 const PRODUCTS_URL = 'https://fakestoreapi.com/products';
+// API endpoint
+const POSTS_API_URL = 'http://localhost:3000/posts';
 
 export default function Products() {
   return (
     <section className='px-6'>
       <QueryClientProvider client={queryClient}>
+        {/* <PaginateProducts /> */}
+        <PostList />
         <ProductList />
       </QueryClientProvider>
     </section>
@@ -77,6 +83,131 @@ function ProductList() {
           );
         })}
       </ul>
+    </div>
+  );
+}
+
+export function PaginateProducts() {
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(5);
+  const [page, setPage] = useState(1);
+  const [posts, setPosts] = useState([]);
+
+  const onPageChange = async (event) => {
+    // {first: 0, rows: 10, page: 0, totalPages: 10}
+    // totalPages: 10 -> dropdown value [5,10,15]
+    // page -> number of page in UI 1,2,3,4
+    // console.log(event);
+    setFirst(event.first);
+    setRows(event.rows);
+    setPage(event.page + 1);
+  };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch(
+        `http://localhost:3000/posts?_page=${page}&_per_page=${rows}`
+      );
+      if (!response.ok) {
+        setPosts([]);
+        return;
+      }
+      const data = await response.json();
+      setPosts(data);
+    };
+    fetchPosts();
+  }, [page]);
+
+  return (
+    <>
+      <h1>Paginate Products {posts.length} </h1>
+
+      <div className='card'>
+        <Paginator
+          first={first}
+          rows={rows}
+          totalRecords={50}
+          rowsPerPageOptions={[5, 10, 15]}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </>
+  );
+}
+
+function PostList() {
+  const [page, setPage] = useState(1); // Start with page 1
+  const perPage = 5; // Number of posts per page
+  const [cachedData, setCachedData] = useState([]);
+  const queryClient = useQueryClient();
+
+  const queryKey = ['postprod', page];
+  // Fetch posts with pagination
+  const { data, error, isLoading, isFetching, isPreviousData } = useQuery({
+    queryKey: queryKey, // Include page in query key to refetch when page changes
+    queryFn: async () => {
+      const response = await fetch(
+        `${POSTS_API_URL}?_page=${page}&_per_page=${perPage}`
+      );
+      if (!response.ok) {
+        throw new Error('Failed to fetch posts');
+      }
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 5, // keep data for five minutes
+  });
+
+  // Handle page change
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
+
+  if (isLoading)
+    return (
+      <div className='card py-6'>
+        <ProgressBar
+          mode='indeterminate'
+          style={{ height: '6px' }}
+        ></ProgressBar>
+      </div>
+    );
+
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <div className='mt-3'>
+      <h2 className='font-medium text-3xl text-900 mb-2'>Posts</h2>
+      <ul className='list-none p-0 m-0'>
+        {data.data?.map((post) => (
+          <li key={uuidv4()} className='py-3 px-2 border-top-1 surface-border'>
+            <div className='text-900 text-xl'>
+              <span className='text-500 text-xl'>{post.id}</span> {post.title}
+            </div>
+            <div className='text-500'>{post.body}</div>
+          </li>
+        ))}
+      </ul>
+
+      <div className='flex justify-content-between mt-4'>
+        <Button
+          label='Previous'
+          icon='pi pi-angle-left'
+          disabled={page === 1}
+          onClick={() => handlePageChange(page - 1)}
+        />
+        <Button
+          label='Next'
+          icon='pi pi-angle-right'
+          disabled={isPreviousData || data.length < perPage}
+          onClick={() => handlePageChange(page + 1)}
+        />
+      </div>
+      {isFetching && (
+        <ProgressBar
+          mode='indeterminate'
+          style={{ height: '6px', marginTop: '10px' }}
+        />
+      )}
     </div>
   );
 }
