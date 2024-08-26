@@ -12,6 +12,9 @@ import HigherOrder from './pages/HigherOrder';
 import SynthicEvent from './pages/SynthicEvent';
 import ErrorPage from './pages/ErrorPage';
 import Products from './routes/Products';
+import Todos from './routes/Todos';
+import { getTodo, todosLoader } from './loader/todosLoader';
+import Todo from './components/Todo';
 
 const router = createBrowserRouter([
   {
@@ -28,12 +31,22 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: '/about',
+        path: 'about',
         element: <About />,
       },
       {
-        path: '/products',
+        path: 'products',
         element: <Products />,
+      },
+      {
+        path: 'todos',
+        element: <Todos />,
+        loader: todosLoader,
+      },
+      {
+        path: 'todos/:todoId',
+        element: <Todo />,
+        loader: getTodo,
       },
       {
         path: '*',

@@ -28,7 +28,7 @@ export default function Products() {
         {/* <PaginateProducts /> */}
         <PostList />
         <ProductList />
-        <ReactQueryDevtools initialIsOpen={true} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </section>
   );

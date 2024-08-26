@@ -15,6 +15,8 @@ Currently, two official plugins are available:
 
 ## Pagination url and response should be
 
+`npx json-server ./db.json`
+
 `/products/index?page_number=5&page_size=20`
 
 `response example ` <br>
